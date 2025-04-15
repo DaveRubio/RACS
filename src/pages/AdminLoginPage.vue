@@ -20,7 +20,7 @@
       </div>
     </q-card-section>
     <q-card-section class="text-center">
-      <div class="text-h5 text-green-8 text-bold">User</div>
+      <div class="text-h5 text-green-8 text-bold">Admin</div>
     </q-card-section>
     <q-card-section>
       <q-input color="green" v-model="email" label="Email" outlined dense :prepend-icon="'mail'" />
@@ -34,16 +34,9 @@
         class="q-mt-md"
         :prepend-icon="'lock'"
       />
-      <div class="text-right text-blue text-caption cursor-pointer q-mt-sm">Forgot password?</div>
       <q-btn label="Sign In" color="green" class="full-width q-mt-md" @click="handleLogin" />
-    </q-card-section>
-    <q-card-section class="text-center">
-      <div class="text-caption">
-        Don't have an account yet?
-        <span class="text-blue cursor-pointer" @click="goToSignUp">Sign up</span>
-      </div>
-      <div class="text-caption q-mt-sm">
-        Switch to <span class="text-blue cursor-pointer" @click.prevent="goToAdmin">Admin</span>
+      <div class="text-caption text-center q-mt-sm">
+        Switch to <span class="text-blue cursor-pointer" @click.prevent="goToUser">User</span>
       </div>
     </q-card-section>
   </q-card>
@@ -79,7 +72,7 @@ export default {
           position: 'top',
           timeout: 2500,
         })
-        router.push('/home/dashboard') // Redirect to the dashboard or home page after login
+        router.push('/admin-panel/dashboard') // Redirect to the dashboard or home page after login
       } catch (error) {
         $q.notify({
           type: 'negative',
@@ -92,14 +85,14 @@ export default {
       router.push('/signup') // Make sure this matches your signup route
     }
 
-    const goToAdmin = () => {
-      router.push('/admin') // Make sure this matches your admin route
+    const goToUser = () => {
+      router.push('/') // Make sure this matches your admin route
     }
 
     return {
       handleLogin,
       goToSignUp,
-      goToAdmin,
+      goToUser,
     }
   },
 }
