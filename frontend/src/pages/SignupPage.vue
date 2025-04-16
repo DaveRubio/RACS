@@ -224,6 +224,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { useQuasar } from 'quasar'
+
 const $q = useQuasar()
 
 export default {
