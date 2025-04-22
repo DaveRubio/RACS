@@ -5,23 +5,33 @@
       <q-page class="q-pa-lg">
         <!-- Summary Cards -->
         <div class="row q-col-gutter-md q-mb-md">
-          <q-card class="col-4 summary-card">
+          <q-card class="col-4 summary-card cursor-pointer" @click="onCardClick('budget')" v-ripple>
             <div class="card-top-strip"></div>
             <q-card-section>
               <q-icon name="account_balance" class="summary-icon" />
               <div class="summary-text">Total Budget</div>
-              <div class="summary-value">{{ selectedData.expenses }}</div>
+              <div class="summary-value">{{ selectedData.budget }}</div>
             </q-card-section>
           </q-card>
-          <q-card class="col-4 summary-card">
+
+          <q-card
+            class="col-4 summary-card cursor-pointer"
+            @click="onCardClick('expenses')"
+            v-ripple
+          >
             <div class="card-top-strip"></div>
             <q-card-section>
               <q-icon name="payment" class="summary-icon" />
               <div class="summary-text">Total Expenses</div>
-              <div class="summary-value">{{ selectedData.budget }}</div>
+              <div class="summary-value">{{ selectedData.expenses }}</div>
             </q-card-section>
           </q-card>
-          <q-card class="col-4 summary-card">
+
+          <q-card
+            class="col-4 summary-card cursor-pointer"
+            @click="onCardClick('balance')"
+            v-ripple
+          >
             <div class="card-top-strip"></div>
             <q-card-section>
               <q-icon name="balance" class="summary-icon" />
@@ -43,8 +53,8 @@
               row-key="barangay"
               :pagination="{ rowsPerPage: 0 }"
               class="my-sticky-header-table"
-            >
-            </q-table>
+              @row-click="onBarangayClick"
+            />
           </q-card-section>
         </q-card>
       </q-page>
@@ -68,6 +78,7 @@ export default {
         { name: 'appropriation', label: 'Total Expenses', align: 'right', field: 'appropriation' },
         { name: 'balance', label: 'Total Balance', align: 'right', field: 'balance' },
       ],
+
       barangaySummary: [
         { barangay: 'Apokon', appropriation: '28,000.00', balance: '28,000.00' },
         { barangay: 'Bincungan', appropriation: '28,000.00', balance: '28,000.00' },
@@ -95,6 +106,26 @@ export default {
       ],
     }
   },
+  methods: {
+    onCardClick(type) {
+      this.$q.notify({
+        message: `You clicked on ${type.toUpperCase()}`,
+        color: 'green-4',
+        textColor: 'white',
+        icon: 'info',
+        position: 'top-right',
+      })
+    },
+    onBarangayClick(row) {
+      this.$q.notify({
+        message: `You clicked on Barangay: ${row.barangay}`,
+        color: 'primary',
+        textColor: 'white',
+        icon: 'location_on',
+        position: 'top-right',
+      })
+    },
+  },
 }
 </script>
 
@@ -109,6 +140,14 @@ export default {
   justify-content: center;
   text-align: center;
   margin: 12px;
+  position: relative;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.2s ease;
+}
+.summary-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .card-top-strip {
@@ -139,11 +178,9 @@ export default {
 .my-sticky-header-table {
   max-height: 500px;
 }
-
 .my-sticky-header-table thead tr:first-child th {
   top: 0;
 }
-
 .my-sticky-header-table.q-table--loading thead tr:last-child th {
   top: 48px;
 }

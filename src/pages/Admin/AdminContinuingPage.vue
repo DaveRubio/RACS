@@ -1,102 +1,95 @@
 <template>
   <div class="q-pa-md">
-    <!-- Search Bar Only -->
-    <div class="row q-mb-md">
-      <q-input dense outlined v-model="search" placeholder="Search..." class="search-input">
-        <template v-slot:append>
-          <q-icon name="search" />
-        </template>
-      </q-input>
-    </div>
+    <!-- Barangay Selector Dropdown -->
+    <q-btn-dropdown color="primary" :label="selectedBarangay" class="barangay-selector-dropdown">
+      <q-list>
+        <q-item
+          v-for="barangay in barangays"
+          :key="barangay"
+          clickable
+          v-close-popup
+          @click="updateBarangayAccounts(barangay)"
+        >
+          <q-item-section>
+            <q-item-label>{{ barangay }}</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-btn-dropdown>
 
-    <!-- Logs Table -->
+    <!-- Continuing Account Table -->
     <q-table
       flat
       bordered
-      :rows="filteredLogs"
+      :rows="barangayAccounts"
       :columns="columns"
       row-key="id"
-      class="logs-table"
+      class="continuing-accounts-table"
       :pagination="{ rowsPerPage: 10 }"
-    >
-      <!-- Custom Date Formatting -->
-      <template v-slot:body-cell-date="props">
-        <q-td :props="props">
-          {{ formatDate(props.row.date) }}
-        </q-td>
-      </template>
-    </q-table>
+    />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'LogsPage',
+  name: 'ContinuingAccountsPage',
   data() {
     return {
-      search: '',
-      logs: [
-        {
-          id: 1,
-          fullname: 'John Doe',
-          date: '02/27/25',
-          activity: 'Accessed Appropriation',
-        },
-        {
-          id: 2,
-          fullname: 'John Doe',
-          date: '02/25/25',
-          activity: 'Accessed Augmentation',
-        },
+      selectedBarangay: 'Apokon', // Default barangay
+      barangays: [
+        'Apokon',
+        'Bincungan',
+        'Busaon',
+        'Canocotan',
+        'Cuambogan',
+        'La Filipina',
+        'Liboganon',
+        'Madaum',
+        'Magdum',
+        'Mankilam',
+        'New Balamban',
+        'Nueva Fuerza',
+        'Pagsabangan',
+        'Pandapan',
+        'Magugpo Poblacion',
+        'San Agustin',
+        'San Isidro',
+        'San Miguel (Camp 4)',
+        'Visayan Village',
+        'Magugpo East',
+        'Magugpo North',
+        'Magugpo South',
+        'Magugpo West',
       ],
+      barangayAccounts: [
+        { id: 1, account: 'Account 1', amount: '20,000.00' },
+        { id: 2, account: 'Account 2', amount: '25,000.00' },
+      ], // Default data for Apokon
       columns: [
         { name: 'id', label: 'ID', field: 'id', align: 'left', sortable: true },
-        { name: 'fullname', label: 'Fullname', field: 'fullname', align: 'left', sortable: true },
-        { name: 'date', label: 'Date', field: 'date', align: 'left', sortable: true },
-        { name: 'activity', label: 'Activity', field: 'activity', align: 'left', sortable: true },
+        { name: 'account', label: 'Account', field: 'account', align: 'left', sortable: true },
+        { name: 'amount', label: 'Amount', field: 'amount', align: 'right', sortable: true },
       ],
     }
   },
-  computed: {
-    filteredLogs() {
-      const searchTerm = this.search.toLowerCase()
-      return this.logs.filter(
-        (log) =>
-          log.fullname.toLowerCase().includes(searchTerm) ||
-          log.activity.toLowerCase().includes(searchTerm) ||
-          log.date.toLowerCase().includes(searchTerm),
-      )
-    },
-  },
   methods: {
-    formatDate(dateString) {
-      // Implement your date formatting logic here
-      return dateString // Return formatted date
+    updateBarangayAccounts(barangay) {
+      // Update the selected barangay and populate new data
+      this.selectedBarangay = barangay
+      this.barangayAccounts = [
+        { id: 1, account: 'Account 1', amount: '20,000.00' },
+        { id: 2, account: 'Account 2', amount: '25,000.00' },
+      ]
     },
   },
 }
 </script>
 
 <style scoped>
-.search-input {
-  width: 250px;
-  margin-bottom: 15px;
+.barangay-selector-dropdown {
+  margin-bottom: 20px;
 }
-
-.logs-table {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-:deep(.logs-table thead th) {
-  background-color: #f5f5f5;
-  font-weight: bold;
-  color: #333;
-}
-
-@media (max-width: 600px) {
-  .search-input {
-    width: 100%;
-  }
+.continuing-accounts-table {
+  margin-top: 20px;
 }
 </style>

@@ -1,10 +1,9 @@
 <template>
   <q-drawer show-if-above bordered :width="200" class="sidebar bg-green">
     <q-list>
-      <!-- Logo -->
       <div class="logo-container">
-        <q-img src="/src/assets/tagum.png" class="logo" />
-        <div class="text-logo">ERAC</div>
+        <q-img src="/src/assets/tagum.png" class="loggo" />
+        <div class="text-loggo">Electronic Registry of Appropriation and Commitment (ERAC)</div>
       </div>
       <br />
       <br />
@@ -13,8 +12,9 @@
       <br />
       <br />
       <br />
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <!-- Menu Items -->
       <q-item clickable v-ripple to="/admin-panel/dashboard" exact active-class="active-menu">
         <q-item-section avatar>
@@ -88,18 +88,18 @@ export default {
 </script>
 
 <style scoped>
-.logo {
-  width: 130px;
-  height: 130px;
+.loggo {
+  width: 140px;
+  height: 110px;
   display: block;
-  margin-top: 105px;
+  margin-top: 115px;
 }
-.text-logo {
-  font-size: 16px;
+.text-loggo {
+  font-size: 13px;
   color: #000000;
   font-weight: bold;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 0px;
 }
 
 .q-item {
