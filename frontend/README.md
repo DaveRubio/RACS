@@ -1,4 +1,4 @@
-# Quasar App (accounting-front)
+# ERAC (accounting-front)
 
 A Quasar Project
 
